@@ -61,7 +61,7 @@ actor Token {
     msg : Text;
   };
 
-  private var adminsEntries: [(Principal, AdminProfile)] = [];
+  private stable var adminsEntries: [(Principal, AdminProfile)] = [];
   private var admins = HashMap.HashMap<Principal, AdminProfile>(1, Principal.equal, Principal.hash);
 
   public query func seeAllTransactions(): async [TransactionBalances] {
@@ -126,10 +126,6 @@ actor Token {
   public query func seeAllClaimedTransaction(): async [(Text, Principal)] {
     return Iter.toArray(claimedTransaction.entries());
   };
-
-  // public query func seeAllStudents(): async [(Principal, StudentProfile)] {
-  //   return Iter.toArray(profiles.entries());
-  // };
  
   public query func seeAllStudents(): async [StudentType] {
       var result:  [StudentType] = [];
@@ -144,10 +140,10 @@ actor Token {
   
 
 
-  private var balancesEntries: [(Principal, BalanceWithHistory)] = [];
-  private var claimedFreeTokenEntries: [(Principal, Bool)] = [];
-  private var profilesEntries: [(Principal, StudentProfile)] = [];
-  private var claimedTransactionEntries: [(Text, Principal)] = [];
+  private stable var balancesEntries: [(Principal, BalanceWithHistory)] = [];
+  private stable var claimedFreeTokenEntries: [(Principal, Bool)] = [];
+  private stable var profilesEntries: [(Principal, StudentProfile)] = [];
+  private stable var claimedTransactionEntries: [(Text, Principal)] = [];
 
   private var balances = HashMap.HashMap<Principal, BalanceWithHistory>(1, Principal.equal, Principal.hash);
   private var profiles = HashMap.HashMap<Principal, StudentProfile>(1, Principal.equal, Principal.hash);
@@ -443,6 +439,7 @@ actor Token {
     adminsEntries := Iter.toArray(admins.entries());
     profilesEntries := Iter.toArray(profiles.entries());
     claimedFreeTokenEntries := Iter.toArray(claimedFreeToken.entries());
+    claimedTransactionEntries := Iter.toArray(claimedTransaction.entries());
   };
 
   system func postupgrade() {
@@ -472,5 +469,6 @@ actor Token {
       });
     };
     claimedFreeToken := HashMap.fromIter<Principal, Bool>(claimedFreeTokenEntries.vals(), 0, Principal.equal, Principal.hash);
+    claimedTransaction := HashMap.fromIter<Text, Principal>(claimedTransactionEntries.vals(), 0, Text.equal, Text.hash);
   };
 }
