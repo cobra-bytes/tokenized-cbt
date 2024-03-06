@@ -32,7 +32,7 @@ const App = () => {
         const authClient = await AuthClient.create();
         if (!(await authClient.isAuthenticated())) {
             await authClient.login({
-                identityProvider: 'http://be2us-64aaa-aaaaa-qaabq-cai.localhost:4943/#authorize',
+                identityProvider: 'https://identity.ic0.app/#authorize',
                 onSuccess: fetchUser,
             });
         }

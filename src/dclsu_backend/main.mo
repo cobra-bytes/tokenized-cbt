@@ -15,8 +15,8 @@ import Prelude "mo:base/Prelude";
 import Buffer "mo:base/Buffer";
 
 actor Token {
-  var owner : Principal = Principal.fromText("jy3pw-2x6t6-s56gr-nc53k-xfsli-2y655-wmnyq-wiemt-ogwd7-2obuk-xqe");
-  var adminadmin : Principal = Principal.fromText("jy3pw-2x6t6-s56gr-nc53k-xfsli-2y655-wmnyq-wiemt-ogwd7-2obuk-xqe");
+  var owner : Principal = Principal.fromText("ecraa-frqon-vthzt-dkvve-gnydz-or7bd-sg7i7-koi7h-ygjof-njmov-xqe");
+  var adminadmin : Principal = Principal.fromText("ecraa-frqon-vthzt-dkvve-gnydz-or7bd-sg7i7-koi7h-ygjof-njmov-xqe");
   var totalSupply : Nat = 100000000;
   var symbol : Text = "CBT";
 
