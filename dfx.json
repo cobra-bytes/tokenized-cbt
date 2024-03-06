@@ -1,0 +1,43 @@
+{
+  "canisters": {
+    "dclsu_backend": {
+      "main": "src/dclsu_backend/main.mo",
+      "type": "motoko"
+    },
+    "dclsu_frontend": {
+      "dependencies": [
+        "dclsu_backend"
+      ],
+      "source": [
+        "src/dclsu_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "dclsu_frontend"
+    },
+    "internet_identity": {
+      "candid": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity.did",
+      "frontend": {},
+      "remote": {
+        "id": {
+          "ic": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+        }
+      },
+      "type": "custom",
+      "wasm": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity_dev.wasm.gz"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1,
+  "networks": {
+    "local": {
+      "bind": "0.0.0.0:8080",
+      "type": "ephemeral"
+    }
+  }
+}

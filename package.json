@@ -1,0 +1,29 @@
+{
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
+  "name": "dclsu",
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "prebuild": "npm run prebuild --workspaces --if-present",
+    "pretest": "npm run prebuild --workspaces --if-present",
+    "start": "npm start --workspaces --if-present",
+    "test": "npm test --workspaces --if-present"
+  },
+  "type": "module",
+  "workspaces": [
+    "src/dclsu_frontend"
+  ],
+  "dependencies": {
+    "@dfinity/auth-client": "^1.0.1",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "bootstrap": "^5.3.3",
+    "datatables.net-dt": "^2.0.1",
+    "react-bootstrap": "^2.10.1",
+    "react-router-dom": "^6.22.2",
+    "sweetalert2": "^11.10.5"
+  }
+}

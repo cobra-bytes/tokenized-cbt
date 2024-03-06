@@ -1,0 +1,45 @@
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+body{
+  // background-image: url(img/background.png);
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+#CTEC_Logo {
+  width: 200px;
+  margin-bottom: 50px;
+}
+
+.login_container {
+  background-color: white;
+  padding: 36px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+
+.login_input .form-floating {
+  width: 75%;
+  margin: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  #CTEC_Logo {
+      width: 150px;
+  }
+
+  .login_container {
+      margin-top: 50px;
+      padding: 20px;
+  }
+
+  .login_input .form-floating {
+      width: 80%;
+      margin: auto;
+  }
+}
