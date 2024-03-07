@@ -1,85 +1,32 @@
-# Check your Balance
-
-1. Find out your principal id:
-
-```
-dfx identity get-principal
-```
-
-2. Save it somewhere.
-
-e.g. My principal id is: qm3sl-n36g6-em2om-rs7fc-4foqp-xjsb3-ceh2g-vevwn-xa2fl-nlkta-eae
+# Central Luzon State University Tokenized Educational Credits
+The Central Luzon State University Tokenized Educational Credit is a proposed system that leverages blockchain technology to represent and manage educational credits earned by students at Central Luzon State University (CLSU).
 
 
-3. Format and store it in a command line variable:
+**Primary Functionality of the Project**
+
+The primary functionality of the system the project is that, students can earn tokens by their achievements like obtaining academic scholars, joining off-campus and university-based  competitions. 
+
+**Purpose of the Project**
+
+Blockchain provides a tamper-proof and transparent record of student achievements, minimizing the risk of fraud or manipulation. Also empowering education with blockchain technology.
+
+**Canister ID / ICP0 URL**
 ```
-OWNER_PUBLIC_KEY="principal \"$( \dfx identity get-principal )\""
+https://wijoo-oiaaa-aaaak-qdb5a-cai.icp0.io/
 ```
 
-4. Check that step 3 worked by printing it out:
-```
-echo $OWNER_PUBLIC_KEY
-```
 
-5. Check the owner's balance:
-```
-dfx canister call dclsu_backend balanceOf "( $OWNER_PUBLIC_KEY )"
-```
+# Introduction
+The educational landscape is undergoing a transformation, and Central Luzon State University (CLSU) is at the forefront of innovation with the Central Luzon State University Tokenized Educational Credits. It goes beyond traditional transcripts, offering a secure, transparent, and efficient approach to representing student learning and academic achievements.CLSU-TEC embodies the university's commitment to embracing technological advancements to elevate the student experience.
 
-# Charge the Canister
+This projects aims to:
 
+**1. Empowering Education with Blockchain Technology**
 
-1. Check canister ID:
-```
-dfx canister id dclsu_backend
-```
+- Signifies a paradigm shift towards a more secure, transparent, and student-centric educational ecosystem. It's a shift towards a future where learners have greater control over their educational journeys, and where institutions and educators can collaborate more effectively to create a world of secure, transparent, and empowering learning experiences.
 
-2. Save canister ID into a command line variable:
-```
-CANISTER_PUBLIC_KEY="principal \"$( \dfx canister id dclsu_backend )\""
-```
+**2. Secure and transparent record-keeping of educational achievements**
 
-3. Check canister ID has been successfully saved:
-```
-echo $CANISTER_PUBLIC_KEY
-```
+- Utilizing blockchain technology to create a secure and tamper-proof system for storing and managing student academic records. This ensures the authenticity and immutability of data, minimizing the risk of fraud or manipulation compared to traditional methods.
 
-4. Transfer half a billion tokens to the canister Principal ID:
-```
-dfx canister call dclsu_backend transfer "($CANISTER_PUBLIC_KEY, 50_000_000)"
-```
-
-# Deploy the Project to the Live IC Network
-
-1. Create and deploy canisters:
-
-```
-dfx deploy --network ic
-```
-
-2. Check the live canister ID:
-```
-dfx canister --network ic id token
-```
-
-3. Save the live canister ID to a command line variable:
-```
-LIVE_CANISTER_KEY="principal \"$( \dfx canister --network ic id token )\""
-```
-
-4. Check that it worked:
-```
-echo $LIVE_CANISTER_KEY
-```
-
-5. Transfer some tokens to the live canister:
-```
-dfx canister --network ic call token transfer "($LIVE_CANISTER_KEY, 50_000_000)"
-```
-
-6. Get live canister front-end id:
-```
-dfx canister --network ic id token_assets
-```
-7. Copy the id from step 6 and add .raw.ic0.app to the end to form a URL.
-e.g. zdv65-7qaaa-aaaai-qibdq-cai.raw.ic0.app# tokenized-cbt
+At Central Luzon State University we're empowering education with blockchain technology introducing Tokenized Educational Credits, your reward for academic excellence. Earn CBTs, exchange them for exclusive educational products and materials and unlock a world of posibilities within CLSU.

@@ -22,6 +22,10 @@ const Admin = () => {
   const [claimedTransactions, setClaimedTransactions] = useState([]);
   const [isClaiming, setIsClaiming] = useState(false);
 
+  const [studentSearchQuery, setStudentSearchQuery] = useState("");
+  const [transactionSearchQuery, setTransactionSearchQuery] = useState("");
+  const [claimedTransactionSearchQuery, setClaimedTransactionSearchQuery] = useState("");
+
   useEffect(() => {
     const fetchAdminSide = async () => {
       await handleProfile();
@@ -29,15 +33,27 @@ const Admin = () => {
       await handleStudents();
       await handleTransactions();
       await handleClaimedTransactions();
-      console.log(transactionsForApproval.length);
     }
     fetchAdminSide();
-}, []);
+  }, []);
 
   const handleClickButton = () => {
     buttonRef.current.click(); 
   };
 
+  const filteredStudents = students.filter(student =>
+    student.profile.full_name.toLowerCase().includes(studentSearchQuery.toLowerCase())
+  );
+
+  const filteredTransactions = transactionsForApproval.filter(transaction =>
+    transaction.balanceHistory.history.some(historyItem =>
+      historyItem.info.toLowerCase().includes(transactionSearchQuery.toLowerCase())
+    )
+  );
+  const filteredClaimedTransactions = claimedTransactions.filter(transaction =>
+    transaction[0].toLowerCase().includes(claimedTransactionSearchQuery.toLowerCase())
+  );
+  
   async function handleProfile() {
     const principal = Principal.fromText(String(user.principalID));
     const authClient = await AuthClient.create();
@@ -152,11 +168,6 @@ const Admin = () => {
     })
   }
 
-  const handleTable = () => {
-    let table = new DataTable('#table_id', {
-        responsive: true
-    });
-  }
   function convertNanoToDate(nano) {
     let nanoseconds = parseInt(nano);
     let milliseconds = nanoseconds / 1000000;
@@ -168,26 +179,28 @@ const Admin = () => {
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{backgroundImage: `linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(${"img/siever.png"})`, backgroundPosition: "center", backgroundSize: "cover"}}>
-          <a className="navbar-brand" href="#">
-              <img src="img/CTEC_Logo-nav.png" height="65" alt="CTEC Logo" />
-          </a>
-          <div className="collapse navbar-collapse" id="navbarNav">
+      <Link className="navbar-brand" to={"/admin"}>
+            <img src="img/CTEC_Logo-nav.png" height="65" alt="CTEC Logo" />
+        </Link>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle text-end" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <strong>Hello, Administrator</strong>
-                  </a>
-                  <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <Link className="dropdown-item" to={"/admin-profile"}>Profile</Link>
-                  <div className="dropdown-divider"></div>
-                  <button className="dropdown-item btn-danger" onClick={logoutIdentity}>Logout</button>
-                  </div>
-              </li>
+                <li className="nav-item dropdown">
+                    <button className="nav-link dropdown-toggle text-end" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <strong>Hello, {profile.full_name}</strong>
+                    </button>
+                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <Link className="dropdown-item" to={"/admin-profile"}>Profile</Link>
+                        <div className="dropdown-divider"></div>
+                        <button className="dropdown-item btn-danger" onClick={logoutIdentity}>Logout</button>
+                    </div>
+                </li>
             </ul>
-          </div>
-      </nav>
-
-      <div className="container-fluid">
+        </div>
+    </nav>
+    <div className="container-fluid">
       <div className="row align-items-center justify-content-center">
         <div className="col-sm-12 col-md-12 col-lg-8">
             <div className="card my-3">
@@ -198,19 +211,22 @@ const Admin = () => {
                       <button className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Unclaimed Transactions</button>
                       <button className="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Claimed Transactions</button>
                     </div>
+                        
                   </nav>
                   <div className="tab-content" id="nav-tabContent">
                     <div className="tab-pane fade show active" id="nav-student" role="tabpanel" aria-labelledby="nav-student-tab" tabIndex="0">
-                      <div className="form-floating mb-3 mt-3">
-                          <input 
-                            type="text" 
-                            className="form-control" 
-                            id="searchInput" 
-                            placeholder="Search students here..." 
-                          />
-                          <label htmlFor="searchInput">Search students here...</label>
-                      </div>
                       <div className="container p-2">
+                        <div className="form-floating mb-3 mt-3">
+                            <input 
+                              type="text" 
+                              className="form-control" 
+                              id="searchInput" 
+                              placeholder="Search students here..." 
+                              value={studentSearchQuery}
+                              onChange={(e) => setStudentSearchQuery(e.target.value)}
+                            />
+                            <label htmlFor="searchInput">Search students here...</label>
+                        </div>
                           <table className="table">
                               <thead>
                                   <tr>
@@ -220,24 +236,28 @@ const Admin = () => {
                                   </tr>
                               </thead>
                               <tbody className="table-group-divider" id="studentTableBody">
-                              {students.map((item, index) => (
-                                <tr key={index}>
-                                  <td className="text-center">{item.profile.student_id}</td>
-                                  <td className="text-center">{item.profile.full_name}</td>
-                                  <td className="col-3 text-center">
-                                    <button 
-                                      type="button" 
-                                      className="btn btn-success fw-bold" 
-                                      data-bs-toggle="modal" 
-                                      data-bs-target="#exampleModal" 
-                                      data-bs-whatever="@mdo"
-                                      onClick={()=> setPrincipalTopup(String(item.principal))}
-                                    >
-                                      Topup
-                                    </button>
-                                  </td>
-                                </tr>
-                              ))}
+                              {filteredStudents.length === 0 ? (
+                                <tr>No student showing.</tr>
+                              ) : (
+                                filteredStudents.map((item, index) => (
+                                  <tr key={index}>
+                                    <td className="text-center">{item.profile.student_id}</td>
+                                    <td className="text-center">{item.profile.full_name}</td>
+                                    <td className="col-3 text-center">
+                                      <button 
+                                        type="button" 
+                                        className="btn btn-success fw-bold" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#exampleModal" 
+                                        data-bs-whatever="@mdo"
+                                        onClick={()=> setPrincipalTopup(String(item.principal))}
+                                      >
+                                        Topup
+                                      </button>
+                                    </td>
+                                  </tr>
+                                ))
+                              )}
                               </tbody>
                           </table>
                       </div>
@@ -274,6 +294,17 @@ const Admin = () => {
                                 
                     <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabIndex="0">
                       <div className="container mt-3 mb-3">
+                        <div className="form-floating mb-3 mt-3">
+                            <input 
+                              type="text" 
+                              className="form-control" 
+                              id="searchInput" 
+                              placeholder="Search students here..." 
+                              value={transactionSearchQuery}
+                              onChange={(e) => setTransactionSearchQuery(e.target.value)}
+                            />
+                            <label htmlFor="searchInput">Search Transaction ID</label>
+                        </div>
                         <table className="table">
                           <thead>
                             <tr>
@@ -284,7 +315,7 @@ const Admin = () => {
                             </tr>
                           </thead>
                           <tbody className="table-group-divider">
-                          {transactionsForApproval.length === 2 ? (
+                          {filteredTransactions.length <= 3 ? (
                             <tr>No transactions for approval.</tr>
                           ) : (
                               transactionsForApproval.map((item, index) => (
@@ -314,6 +345,17 @@ const Admin = () => {
                     </div>
                     <div className="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabIndex="0">
                       <div className="container mt-3 mb-3">
+                        <div className="form-floating mb-3 mt-3">
+                            <input 
+                              type="text" 
+                              className="form-control" 
+                              id="searchInput" 
+                              placeholder="Search students here..." 
+                              value={claimedTransactionSearchQuery}
+                              onChange={(e) => setClaimedTransactionSearchQuery(e.target.value)}
+                            />
+                            <label htmlFor="searchInput">Search students here...</label>
+                        </div>
                         <table className="table">
                           <thead>
                             <tr>
@@ -322,16 +364,20 @@ const Admin = () => {
                             </tr>
                           </thead>
                           <tbody className="table-group-divider">
-                          {claimedTransactions.map((item, index) => (
-                              <tr key={index}>
-                                <td className="text-center" scope="row">{item[0]}</td>
-                                <td className="text-center">
-                                  <span className="badge text-bg-success">
-                                    Claimed
-                                  </span>
-                                </td>
-                              </tr>
-                          ))}
+                          {filteredClaimedTransactions.length === 0 ? (
+                              <tr>No claimed transaction showing.</tr>
+                            ) : (
+                            filteredClaimedTransactions.map((item, index) => (
+                                <tr key={index}>
+                                  <td className="text-center" scope="row">{item[0]}</td>
+                                  <td className="text-center">
+                                    <span className="badge text-bg-success">
+                                      Claimed
+                                    </span>
+                                  </td>
+                                </tr>
+                            ))
+                          )}
                           </tbody>
                         </table>
                       </div>

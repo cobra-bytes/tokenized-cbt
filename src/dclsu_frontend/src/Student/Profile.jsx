@@ -95,24 +95,27 @@ const Profile = () => {
   return (
     <>
      <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{backgroundImage: `linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(${"img/siever.png"})`, backgroundPosition: "center", backgroundSize: "cover"}}>
-          <a className="navbar-brand" href="#">
-              <img src="img/CTEC_Logo-nav.png" height="65" alt="CTEC Logo" />
-          </a>
-          <div className="collapse navbar-collapse" id="navbarNav">
+        <Link className="navbar-brand" to={"/student"}>
+            <img src="img/CTEC_Logo-nav.png" height="65" alt="CTEC Logo" />
+        </Link>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle text-end" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <strong>Hello, {userProfile.full_name}</strong>
-                  </a>
-                  <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <Link className="dropdown-item" to={"/student"}>Home</Link>
-                  <div className="dropdown-divider"></div>
-                  <button className="dropdown-item btn-danger" onClick={logoutIdentity}>Logout</button>
-                  </div>
-              </li>
+                <li className="nav-item dropdown">
+                    <button className="nav-link dropdown-toggle text-end" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <strong>Hello, {userProfile.full_name}</strong>
+                    </button>
+                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <Link className="dropdown-item" to={"/student"}>Student</Link>
+                        <div className="dropdown-divider"></div>
+                        <button className="dropdown-item btn-danger" onClick={logoutIdentity}>Logout</button>
+                    </div>
+                </li>
             </ul>
-          </div>
-        </nav>
+        </div>
+    </nav>
     <div className="container-fluid">
         <div className="row align-items-center justify-content-center">
             <div className="mt-5 col col-md-12 col-sm-12 col-lg-6 offset-lg-1">

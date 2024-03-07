@@ -130,22 +130,25 @@ const AdminProfile = () => {
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{backgroundImage: `linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(${"img/siever.png"})`, backgroundPosition: "center", backgroundSize: "cover"}}>
-          <a className="navbar-brand" href="#">
-              <img src="img/CTEC_Logo-nav.png" height="65" alt="CTEC Logo" />
-          </a>
+        <Link className="navbar-brand" to={"/admin-profile"}>
+          <img src="img/CTEC_Logo-nav.png" height="65" alt="CTEC Logo" />
+        </Link>
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+          </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle text-end" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <strong>Hello, Administrator</strong>
-                  </a>
-                  <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <Link className="dropdown-item" to={"/admin"}>Home</Link>
-                  <div className="dropdown-divider"></div>
-                  <button className="dropdown-item btn-danger" onClick={logoutIdentity}>Logout</button>
-                  </div>
-              </li>
-            </ul>
+              <ul className="navbar-nav ml-auto">
+                  <li className="nav-item dropdown">
+                      <button className="nav-link dropdown-toggle text-end" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <strong>Hello, {profile.full_name}</strong>
+                      </button>
+                      <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                          <Link className="dropdown-item" to={"/admin"}>Home</Link>
+                          <div className="dropdown-divider"></div>
+                          <button className="dropdown-item btn-danger" onClick={logoutIdentity}>Logout</button>
+                      </div>
+                  </li>
+              </ul>
           </div>
       </nav>
       <div className="container-fluid">
@@ -155,22 +158,18 @@ const AdminProfile = () => {
             <div className="card-body">
                 <h4>Welcome,</h4>
                 <h1><strong>Administrator</strong></h1>
-                <table className="table mt-3" style={{maxWidth: "100%"}}>
-                  <tbody>
-                    <tr>
-                        <th scope='row' className="fit">Principal ID</th>
-                        <td>{user.principalID}</td>
-                    </tr>
-                    <tr>
-                        <th scope='row' className="fit">Full Name</th>
-                        <td>{profile.full_name}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" className="fit">Email</th>
-                        <td>{profile.email}</td>
-                    </tr>
-                  </tbody>
-              </table>
+                <div className="mb-3">
+                    <label className="small mb-1" htmlFor="principalID"><b>Principal ID</b></label>
+                    <input disabled className="form-control" id="principalID" value={user.principalID} type="text" placeholder="Principal ID" required/>
+                </div>
+                <div className="mb-3">
+                    <label className="small mb-1" htmlFor="principalID"><b>Principal ID</b></label>
+                    <input disabled className="form-control" id="principalID" value={profile.full_name} type="text" placeholder="Principal ID" required/>
+                </div>
+                <div className="mb-3">
+                    <label className="small mb-1" htmlFor="principalID"><b>Principal ID</b></label>
+                    <input disabled className="form-control" id="principalID" value={profile.email} type="text" placeholder="Principal ID" required/>
+                </div>
               <div className="pt-3"> <a href="" className="btn btn-danger w-100" onClick={logoutIdentity}>Log out</a></div>
             </div>
           </div>

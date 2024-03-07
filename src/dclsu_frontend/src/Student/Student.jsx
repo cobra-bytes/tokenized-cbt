@@ -132,25 +132,27 @@ const Student = () => {
     return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{backgroundImage: `linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(${"img/siever.png"})`, backgroundPosition: "center", backgroundSize: "cover"}}>
-      {/* <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{backgroundImage: `url(${"img/siever.png"})`, backgroundPosition: "center", backgroundSize: "cover"}}> */}
-          <a className="navbar-brand" href="#">
-              <img src="img/CTEC_Logo-nav.png" height="65" alt="CTEC Logo" />
-          </a>
-          <div className="collapse navbar-collapse" id="navbarNav">
+      <Link className="navbar-brand" to={"/student"}>
+            <img src="img/CTEC_Logo-nav.png" height="65" alt="CTEC Logo" />
+        </Link>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle text-end" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <strong>Hello, {userProfile.full_name}</strong>
-                  </a>
-                  <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <Link className="dropdown-item" to={"/profile"}>Profile</Link>
-                  <div className="dropdown-divider"></div>
-                  <button className="dropdown-item btn-danger" onClick={logoutIdentity}>Logout</button>
-                  </div>
-              </li>
+                <li className="nav-item dropdown">
+                    <button className="nav-link dropdown-toggle text-end" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <strong>Hello, {userProfile.full_name}</strong>
+                    </button>
+                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <Link className="dropdown-item" to={"/profile"}>Profile</Link>
+                        <div className="dropdown-divider"></div>
+                        <button className="dropdown-item btn-danger" onClick={logoutIdentity}>Logout</button>
+                    </div>
+                </li>
             </ul>
-          </div>
-        </nav>
+        </div>
+    </nav>
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-6 offset-lg-1 col-sm-12">
@@ -182,26 +184,24 @@ const Student = () => {
               <h3 className="h3 mb-3">Exchange your Token</h3>
               {/* <a href="marketplace.html" className="">View all</a> */}
             </div>
-            <div className="row row-cols-xl-4 row-cols-lg-3 row-cols-sm-2">
+            <div className="row row-cols-xl-3 row-cols-lg-3 row-cols-sm-2">
               {marketplace.map((item, index) => (
-                <div className="col mb-2" key={index}>
-                  <div className="card">
-                    <div className="card-body text-center">
-                      <img src={item.src} className="card-img-top market-item" alt="Grammarly" />
-                      <h6 className="bold pt-3">{item.name}</h6>
-                      <p>{item.cbt.toLocaleString()} CBT</p>
+                    <div className="col mb-2" key={index}>
+                    <div className="card">
+                      <div className="card-body text-center">
+                        <img src={item.src} className="card-img-top market-item img-fluid" alt="Grammarly" />
+                        <h6 className="bold pt-3">{item.name}</h6>
+                        <p>{item.cbt.toLocaleString()} CBT</p>
+                      </div>
+                      <div style={{cursor: "pointer"}} className="card-footer text-center" onClick={() => handleWithdrawBalance(item.name, item.cbt)}>
+                        Redeem
+                      </div>
                     </div>
-                    <div style={{cursor: "pointer"}} className="card-footer text-center" onClick={() => handleWithdrawBalance(item.name, item.cbt)}>
-                      Redeem
-                    </div>
-                 </div>
-               </div>
-                
+                </div>
               ))}
             </div>
           </div>
         </div>
-
         <div className="col-lg-4 col-sm-12">
           <div className="card my-3">
             <div className="card-body">
@@ -212,7 +212,7 @@ const Student = () => {
               </div>
                 <div className="mt-3">
                   <h4>Wallet History</h4>
-                  <small className="text-muted">Transactions</small>
+                  <small className="text-muted">Redeem Transactions can be claimed to Office of Admission</small>
                   <ul className="list-group list-group-flush pt-3 scrollspy-example" data-bs-offset="0" >
                     {history.slice().reverse().map((item, index) => (
                       <li className="list-group-item">
