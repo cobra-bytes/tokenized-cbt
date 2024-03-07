@@ -14,7 +14,6 @@ const Profile = () => {
     const { user, logoutIdentity } = useContext(LoginContext);
     const [userProfile, setUserProfile] = useState({});
     const [originalProfile, setOriginalProfile] = useState({});
-    const [studentID, setStudentID] = useState("")
     const [fullName, setFullName] = useState("")
     const [email, setEmail] = useState("")
     const [program, setProgram] = useState("")

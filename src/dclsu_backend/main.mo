@@ -15,8 +15,8 @@ import Prelude "mo:base/Prelude";
 import Buffer "mo:base/Buffer";
 
 actor Token {
-  var owner : Principal = Principal.fromText("jwrco-6o5mo-zlaen-juftm-aksic-vkacq-2r3km-5mmly-mtsx5-3xcsz-6ae");
-  var adminadmin : Principal = Principal.fromText("jwrco-6o5mo-zlaen-juftm-aksic-vkacq-2r3km-5mmly-mtsx5-3xcsz-6ae");
+  var owner : Principal = Principal.fromText("ecraa-frqon-vthzt-dkvve-gnydz-or7bd-sg7i7-koi7h-ygjof-njmov-xqe");
+  var adminadmin : Principal = Principal.fromText("ecraa-frqon-vthzt-dkvve-gnydz-or7bd-sg7i7-koi7h-ygjof-njmov-xqe");
   var totalSupply : Nat = 100000000;
   var symbol : Text = "CBT";
 
@@ -61,7 +61,7 @@ actor Token {
     msg : Text;
   };
 
-  private var adminsEntries: [(Principal, AdminProfile)] = [];
+  private stable var adminsEntries: [(Principal, AdminProfile)] = [];
   private var admins = HashMap.HashMap<Principal, AdminProfile>(1, Principal.equal, Principal.hash);
 
   public query func seeAllTransactions(): async [TransactionBalances] {
@@ -138,12 +138,10 @@ actor Token {
       return result;
   };
   
-
-
-  private var balancesEntries: [(Principal, BalanceWithHistory)] = [];
-  private var claimedFreeTokenEntries: [(Principal, Bool)] = [];
-  private var profilesEntries: [(Principal, StudentProfile)] = [];
-  private var claimedTransactionEntries: [(Text, Principal)] = [];
+  private stable var balancesEntries: [(Principal, BalanceWithHistory)] = [];
+  private stable var claimedFreeTokenEntries: [(Principal, Bool)] = [];
+  private stable var profilesEntries: [(Principal, StudentProfile)] = [];
+  private stable var claimedTransactionEntries: [(Text, Principal)] = [];
 
   private var balances = HashMap.HashMap<Principal, BalanceWithHistory>(1, Principal.equal, Principal.hash);
   private var profiles = HashMap.HashMap<Principal, StudentProfile>(1, Principal.equal, Principal.hash);
